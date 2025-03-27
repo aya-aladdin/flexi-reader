@@ -1,0 +1,149 @@
+{% extends 'core/base.html' %}
+{% block title %}Upload Book{% endblock %}
+
+{% block content %}
+    <style>
+        /* Specific styles for the Upload Book page */
+        .upload-heading {
+            font-size: 1.5rem; /* Equivalent to text-2xl */
+            font-weight: 600; /* Equivalent to font-semibold */
+            color: #212529; /* Equivalent to text-gray-800 */
+            margin-bottom: 1.5rem; /* Equivalent to mb-6 */
+        }
+
+        .upload-form {
+            background-color: #fff;
+            border-radius: 0.5rem; /* Equivalent to rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Equivalent to shadow-md */
+            padding: 2rem;
+            max-width: 32rem; /* Adjusted max-width for better form appearance */
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: #495057; /* Gray-700 */
+            font-size: 0.875rem; /* Equivalent to text-sm */
+            font-weight: 700; /* Equivalent to font-bold */
+            margin-bottom: 0.5rem; /* Equivalent to mb-2 */
+        }
+
+        .form-input,
+        .form-file,
+        .form-image {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ced4da; /* Gray-300 */
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+            color: #495057;
+            background-color: #fff;
+            box-sizing: border-box;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-input:focus,
+        .form-file:focus,
+        .form-image:focus {
+            border-color: #007bff; /* Blue */
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .form-error {
+            color: #dc3545; /* Red-500 */
+            font-size: 0.75rem; /* Equivalent to text-xs */
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
+        .form-help-text {
+            color: #6c757d; /* Gray-500 */
+            font-size: 0.75rem; /* Equivalent to text-xs */
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
+        .submit-button {
+            background-color: #007bff; /* Blue-500 */
+            color: #fff;
+            font-weight: 700; /* Equivalent to font-bold */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3; /* Blue-700 */
+        }
+
+        .error-message {
+            background-color: #fdeaea; /* Light red background */
+            border: 1px solid #f5c6cb; /* Light red border */
+            color: #721c24; /* Dark red text */
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .error-message strong {
+            font-weight: bold;
+        }
+
+        .error-message .block {
+            display: block;
+        }
+
+        @media (min-width: 640px) {
+            .error-message .block {
+                display: inline;
+            }
+        }
+    </style>
+
+    <h2 class="upload-heading">Upload New Book</h2>
+    <form method="post" action="{% url 'core:upload_book' %}" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="error-message">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">Please correct the errors below.</span>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="id_title" class="form-label">Title:</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <p class="form-error">{{ form.title.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="id_file" class="form-label">Book File:</label>
+            {{ form.file }}
+            {% if form.file.errors %}
+                <p class="form-error">{{ form.file.errors.as_text }}</p>
+            {% endif %}
+            <p class="form-help-text">Allowed formats:.pdf</p>
+        </div>
+         <div class="form-group">
+            <label for="id_cover_image" class="form-label">Cover Image (Optional):</label>
+            {{ form.cover_image }}
+            {% if form.cover_image.errors %}
+                <p class="form-error">{{ form.cover_image.errors.as_text }}</p>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="submit-button">Upload Book</button>
+    </form>
+    <script>
+        // No need for the script block here as the styling is now handled by CSS classes.
+    </script>
+{% endblock %}

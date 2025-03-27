@@ -1,0 +1,120 @@
+:root {
+    --primary-color: #0078d7;  /* Default blue */
+    --primary-dark: #0056b3;
+    --secondary-color: #6c757d; /* Default gray */
+    --text-color: #333;          /* Dark gray text */
+    --background-color: #f8f9fa;  /* Very light gray background */
+    --highlight-color: #fffacd;  /* Light yellow for highlights */
+    --accent-color: #e9ecef;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+a {
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.navbar-brand {
+    color: var(--primary-color);
+}
+
+.nav-link {
+    color: var(--text-color);
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+/* Reading Container */
+#reader-container {
+    background-color: white; /* Default white for reader background */
+    color: var(--text-color);
+}
+
+.annotation {
+    background-color: var(--highlight-color); /* Apply highlight color */
+}
+
+/* Alternative Theme 1: Pastel */
+.theme-pastel {
+    --primary-color: #f06292;  /* Pink */
+    --primary-dark: #ec407a;
+    --secondary-color: #ba68c8; /* Purple */
+    --text-color: #4a148c;       /* Very dark purple text */
+    --background-color: #fce4ec;  /* Very light pink background */
+    --highlight-color: #fff59d;  /* Light yellow highlight */
+    --accent-color: #f8bbd0;
+}
+
+/* Alternative Theme 2: Serene */
+.theme-serene {
+    --primary-color: #4fc3f7;  /* Light blue */
+    --primary-dark: #03a9f4;
+    --secondary-color: #81c784; /* Light green */
+    --text-color: #004d40;       /* Very dark green text */
+    --background-color: #e0f7fa;  /* Very light blue background */
+    --highlight-color: #ffecb3;  /* Light yellow highlight */
+    --accent-color: #b2ebf2;
+}
+
+/* Apply theme classes to the body or other root elements as needed */
+body.theme-pastel {
+    --primary-color: #f06292;
+    --primary-dark: #ec407a;
+    --secondary-color: #ba68c8;
+    --text-color: #4a148c;
+    --background-color: #fce4ec;
+    --highlight-color: #fff59d;
+    --accent-color: #f8bbd0;
+}
+body.theme-serene {
+    --primary-color: #4fc3f7;
+    --primary-dark: #03a9f4;
+    --secondary-color: #81c784;
+    --text-color: #004d40;
+    --background-color: #e0f7fa;
+    --highlight-color: #ffecb3;
+    --accent-color: #b2ebf2;
+}
+
+/* Example of applying a theme - you would do this dynamically in your JS */
+/* You would add/remove the theme class on the body element, e.g.:
+    document.body.classList.add('theme-pastel');
+*/

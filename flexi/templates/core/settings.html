@@ -1,0 +1,198 @@
+{% extends 'core/base.html' %}
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+    <style>
+        /* Settings Page Specific Styles */
+        .settings-container {
+            background-color: #fff;
+            border-radius: 0.5rem; /* Equivalent to rounded-lg */
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md */
+            padding: 2rem;
+            max-width: 32rem; /* Equivalent to max-w-md */
+            margin: 2rem auto;
+        }
+
+        .settings-title {
+            font-size: 1.5rem; /* Equivalent to text-2xl */
+            font-weight: 600; /* Equivalent to font-semibold */
+            color: #333; /* Slightly darker than gray-800 */
+            margin-bottom: 1.5rem;
+        }
+
+        .error-message {
+            background-color: #fdeaea; /* Light red background */
+            border: 1px solid #f5c6cb; /* Light red border */
+            color: #721c24; /* Dark red text */
+            padding: 0.75rem 1rem; /* Equivalent to px-4 py-3 */
+            border-radius: 0.25rem; /* Equivalent to rounded */
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .error-message strong {
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: #555; /* Slightly lighter than gray-700 */
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            color: #333;
+            box-sizing: border-box;
+            appearance: none; /* Removes default arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 20 20" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>');
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.25rem;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #007bff; /* Blue-500 */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Subtle blue shadow */
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            color: #333;
+            box-sizing: border-box; /* Ensure padding doesn't increase width */
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #007bff; /* Blue-500 */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Subtle blue shadow */
+        }
+
+        .form-input[type="color"] {
+            padding: 0.5rem;
+            height: auto;
+        }
+
+        .error-message-inline {
+            color: #dc3545; /* Red-500 */
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
+        .update-button {
+            background-color: #007bff; /* Blue-500 */
+            color: #fff;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .update-button:hover {
+            background-color: #0056b3; /* Blue-700 */
+        }
+    </style>
+    <div class="settings-container">
+        <h2 class="settings-title">Settings</h2>
+        <form method="post" action="{% url 'core:settings' %}">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="error-message" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span>Please correct the errors below.</span>
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="id_theme" class="form-label">Theme:</label>
+                {{ form.theme }}
+                 {% if form.theme.errors %}
+                    <p class="error-message-inline">{{ form.theme.errors.as_text }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_font_size" class="form-label">Font Size:</label>
+                {{ form.font_size }}
+                 {% if form.font_size.errors %}
+                    <p class="error-message-inline">{{ form.font_size.errors.as_text }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_font_family" class="form-label">Font Family:</label>
+                {{ form.font_family }}
+                 {% if form.font_family.errors %}
+                    <p class="error-message-inline">{{ form.font_family.errors.as_text }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_background_color" class="form-label">Background Color:</label>
+                {{ form.background_color }}
+                 {% if form.background_color.errors %}
+                    <p class="error-message-inline">{{ form.background_color.errors.as_text }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_text_color" class="form-label">Text Color:</label>
+                {{ form.text_color }}
+                 {% if form.text_color.errors %}
+                    <p class="error-message-inline">{{ form.text_color.errors.as_text }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_line_spacing" class="form-label">Line Spacing:</label>
+                {{ form.line_spacing }}
+                 {% if form.line_spacing.errors %}
+                    <p class="error-message-inline">{{ form.line_spacing.errors.as_text }}</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="update-button">Update Settings</button>
+        </form>
+    </div>
+    <script>
+        const themeInput = document.getElementById('id_theme');
+        if (themeInput) {
+            themeInput.classList.add('form-select');
+        }
+        const fontSizeInput = document.getElementById('id_font_size');
+        if (fontSizeInput) {
+            fontSizeInput.classList.add('form-select');
+        }
+        const fontFamilyInput = document.getElementById('id_font_family');
+        if (fontFamilyInput) {
+            fontFamilyInput.classList.add('form-select');
+        }
+        const backgroundColorInput = document.getElementById('id_background_color');
+        if (backgroundColorInput) {
+            backgroundColorInput.classList.add('form-input');
+            backgroundColorInput.type = 'color';
+        }
+        const textColorInput = document.getElementById('id_text_color');
+        if (textColorInput) {
+            textColorInput.classList.add('form-input');
+            textColorInput.type = 'color';
+        }
+        const lineSpacingInput = document.getElementById('id_line_spacing');
+        if (lineSpacingInput) {
+            lineSpacingInput.classList.add('form-select');
+        }
+    </script>
+{% endblock %}

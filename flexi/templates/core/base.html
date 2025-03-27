@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flexi Reader{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themes.css' %}">
+    <style>
+      /* styles.css (embedded for this example) */
+      body {
+          font-family: 'Inter', sans-serif;
+          line-height: 1.6;
+          color: #333; /* Dark gray for body text */
+          background-color: #f8f8f8; /* Light gray background */
+          margin: 0;
+          padding: 0;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+      }
+
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+      }
+
+      header {
+          background-color: #fff;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          padding: 1rem 0;
+      }
+
+      header .container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+
+      header a.text-xl {
+          color: #333;
+          text-decoration: none;
+          font-weight: 600;
+      }
+
+      nav ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+      }
+
+      nav li {
+          margin-left: 1.5rem;
+      }
+
+      nav a {
+          text-decoration: none;
+          color: #555; /* Medium gray for navigation links */
+          transition: color 0.2s ease-in-out;
+      }
+
+      nav a:hover {
+          color: #007bff; /* Blue hover color */
+      }
+
+      main {
+          padding: 2rem 0;
+      }
+
+      footer {
+          background-color: #e9ecef; /* Lightest gray for footer */
+          padding: 1rem 0;
+          margin-top: 2rem;
+          text-align: center;
+          font-size: 0.9rem;
+          color: #6c757d; /* Slightly darker gray for footer text */
+      }
+
+      .text-center {
+          text-align: center;
+      }
+
+      .font-semibold {
+          font-weight: 600;
+      }
+
+      .text-gray-800 {
+          color: #212529; /* Darkest gray */
+      }
+
+      .text-gray-700 {
+          color: #495057; /* Dark gray */
+      }
+
+      .text-blue-600 {
+          color: #007bff; /* Blue */
+      }
+
+      .bg-white {
+          background-color: #fff;
+      }
+
+      .bg-gray-100 {
+          background-color: #f8f9fa; /* Light gray */
+      }
+
+      .bg-gray-200 {
+          background-color: #e9ecef; /* Slightly darker light gray */
+      }
+
+      .shadow-md {
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .py-4 {
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+      }
+
+      .py-8 {
+          padding-top: 2rem;
+          padding-bottom: 2rem;
+      }
+
+      .space-x-6 > * + * {
+          margin-left: 1.5rem;
+      }
+
+      .flex {
+          display: flex;
+      }
+
+      .justify-between {
+          justify-content: space-between;
+      }
+
+      .items-center {
+          align-items: center;
+      }
+
+      .transition-colors {
+          transition: color 0.2s ease-in-out;
+      }
+
+      @media (max-width: 768px) {
+          header .container {
+              flex-direction: column;
+              align-items: flex-start;
+          }
+
+          nav {
+              margin-top: 1rem;
+          }
+
+          nav ul {
+              flex-direction: column;
+              align-items: flex-start;
+          }
+
+          nav li {
+              margin: 0.5rem 0;
+          }
+      }
+    </style>
+    {% block extra_head %}
+    {% endblock %}
+</head>
+<body class="bg-gray-100">
+    <header class="bg-white shadow-md py-4">
+        <div class="container flex justify-between items-center">
+            <a href="{% url 'core:home' %}" class="text-xl font-semibold text-gray-800">Flexi Reader</a>
+            <nav>
+                <ul class="flex space-x-6">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'core:library' %}" class="text-gray-700 hover:text-blue-600 transition-colors">My Library</a></li>
+                        <li><a href="{% url 'core:settings' %}" class="text-gray-700 hover:text-blue-600 transition-colors">Settings</a></li>
+                        <li><a href="{% url 'core:signout' %}" class="text-gray-700 hover:text-blue-600 transition-colors">Sign Out</a></li>
+                    {% else %}
+                        <li><a href="{% url 'core:signup' %}" class="text-gray-700 hover:text-blue-600 transition-colors">Sign Up</a></li>
+                        <li><a href="{% url 'core:signin' %}" class="text-gray-700 hover:text-blue-600 transition-colors">Sign In</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container py-8">
+        {% block content %}
+            {% endblock %}
+    </main>
+
+    <footer class="bg-gray-200 py-4 mt-8">
+        <div class="container text-center text-gray-600">
+            &copy; {% now "Y" %} Flexi Reader. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% block extra_js %}
+    {% endblock %}
+</body>
+</html>

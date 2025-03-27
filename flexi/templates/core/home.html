@@ -1,0 +1,138 @@
+{% extends 'core/base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <style>
+        /* Specific styles for the home page */
+        .home-section {
+            padding-top: 4rem; /* Adjust for header height if needed */
+            padding-bottom: 4rem;
+        }
+
+        .hero-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 2.25rem; /* Equivalent to text-3xl */
+            font-weight: 600; /* Equivalent to font-semibold */
+            color: #212529; /* Equivalent to text-gray-800 */
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem; /* Equivalent to text-lg */
+            color: #6c757d; /* Equivalent to text-gray-600 */
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .cta-button {
+            padding: 0.75rem 1.5rem; /* Equivalent to py-2 px-4 */
+            font-weight: 700; /* Equivalent to font-bold */
+            border-radius: 0.25rem; /* Equivalent to rounded */
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .signup-button {
+            background-color: #007bff; /* Blue-500 */
+            color: #fff;
+        }
+
+        .signup-button:hover {
+            background-color: #0056b3; /* Blue-700 */
+        }
+
+        .signin-button {
+            background-color: #28a745; /* Green-500 */
+            color: #fff;
+        }
+
+        .signin-button:hover {
+            background-color: #1e7e34; /* Green-700 */
+        }
+
+        .features-section {
+            padding: 2rem 0;
+        }
+
+        .features-title {
+            font-size: 1.5rem; /* Equivalent to text-2xl */
+            font-weight: 600; /* Equivalent to font-semibold */
+            color: #212529; /* Equivalent to text-gray-800 */
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Default for mobile */
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 columns for larger screens */
+            }
+        }
+
+        .feature-item {
+            background-color: #fff;
+            border-radius: 0.5rem; /* Equivalent to rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Equivalent to shadow-md */
+            padding: 1.5rem;
+        }
+
+        .feature-item-title {
+            font-size: 1.25rem; /* Equivalent to text-xl */
+            font-weight: 600; /* Equivalent to font-semibold */
+            color: #495057; /* Equivalent to text-gray-700 */
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item-description {
+            color: #6c757d; /* Equivalent to text-gray-600 */
+        }
+    </style>
+
+    <section class="home-section hero-section">
+        <h2 class="hero-title">Welcome to Flexi Reader</h2>
+        <p class="hero-subtitle">Your personalized mobile reading experience.</p>
+        {% if not user.is_authenticated %}
+            <div class="cta-buttons">
+                <a href="{% url 'core:signup' %}" class="cta-button signup-button">Sign Up</a>
+                <a href="{% url 'core:signin' %}" class="cta-button signin-button">Sign In</a>
+            </div>
+        {% else %}
+            <p class="text-center text-gray-600">You are already logged in.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'core:library' %}" class="cta-button signup-button">Go to Library</a>
+            </div>
+        {% endif %}
+    </section>
+    <section class="home-section features-section">
+        <h3 class="features-title">Key Features</h3>
+        <div class="features-grid">
+            <div class="feature-item">
+                <h4 class="feature-item-title">Personalized Reading</h4>
+                <p class="feature-item-description">Customize themes, fonts, and colors.</p>
+            </div>
+            <div class="feature-item">
+                <h4 class="feature-item-title">Library Management</h4>
+                <p class="feature-item-description">Upload and organize your books.</p>
+            </div>
+            <div class="feature-item">
+                <h4 class="feature-item-title">Annotations</h4>
+                <p class="feature-item-description">Highlight and add notes to your books.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
