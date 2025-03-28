@@ -1,0 +1,416 @@
+/* General Styles (Simplified, Assuming a CSS Reset or Tailwind) */
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Specific styles for the My Library page */
+.library-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 1rem;
+}
+
+.upload-button {
+    background-color: #28a745;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
+    margin-bottom: 1.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.upload-button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+    padding: 1rem 0;
+}
+
+@media (min-width: 576px) {
+    .book-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .book-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.book-item {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.75rem 1.25rem rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    border: 1px solid #dee2e6;
+}
+
+.book-item:hover {
+    box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+}
+
+.book-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #495057;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.book-cover {
+    max-height: 15rem;
+    object-fit: cover;
+    border-radius: 0.3rem;
+    margin-bottom: 1.25rem;
+    width: 100%;
+    transition: opacity 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.no-cover {
+    background-color: #e9ecef;
+    height: 15rem;
+    border-radius: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    color: #adb5bd;
+    font-size: 1.1rem;
+    text-align: center;
+    transition: background-color 0.2s ease-in-out;
+    border: 1px dashed #ced4da;
+}
+
+.book-uploaded-at {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.read-button {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.8rem 1.8rem;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin-top: auto;
+    transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+.read-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.no-books-message {
+    color: #6c757d;
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border: 1px dashed #ced4da;
+    border-radius: 0.3rem;
+    background-color: #f0f8ff;
+}
+
+.pagination {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.step-links a,
+.step-links span {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    margin: 0 0.3rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    color: #495057;
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    font-size: 0.9rem;
+}
+
+.step-links a:hover {
+    background-color: #e2e6ea;
+    color: #333;
+    border-color: #b5b8bd;
+}
+
+.step-links .current {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    font-weight: 600;
+    transition: none;
+}
+
+.step-links .rounded-l {
+    border-radius: 0.3rem 0 0 0.3rem;
+}
+
+.step-links .rounded-r {
+    border-radius: 0 0.3rem 0.3rem 0;
+}
+
+/* New styles for details button and actions */
+.details-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #495057;
+    border: none;
+    padding: 0.6rem;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease, background-color 0.2s ease-in-out;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.details-button:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.details-button:active {
+   transform: scale(0.95);
+}
+
+.details-button i {
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+.details-button:hover i {
+    color: #495057;
+}
+
+.details-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.6rem;
+    box-shadow: 0 0.75rem 1rem rgba(0, 0, 0, 0.1);
+    padding: 1.25rem;
+    z-index: 10;
+    display: none;
+    margin-top: 0.75rem;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s ease-in-out;
+    min-width: 150px;
+}
+
+.details-container.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 1rem 1.25rem rgba(0, 0, 0, 0.15);
+}
+
+.details-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.details-action-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    color: #333;
+    font-weight: 500;
+}
+
+.details-action-button:hover {
+    background-color: #e0e0e0;
+    color: #222;
+}
+
+.details-action-button.edit {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.details-action-button.edit:hover {
+    background-color: #e0a800;
+    color: #fff;
+}
+
+.details-action-button.delete {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.details-action-button.delete:hover {
+    background-color: #c82333;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 0.5rem;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Form Styles within the Modal */
+.edit-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.edit-form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #343a40;
+}
+
+.edit-form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.edit-form-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.edit-form-error {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
+.edit-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.edit-form-submit {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.edit-form-submit:hover {
+    background-color: #218838;
+}
+
+.edit-form-cancel {
+    background-color: #e9ecef;
+    color: #343a40;
+}
+
+.edit-form-cancel:hover {
+    background-color: #dee2e6;
+}
+
+.loading-indicator {
+    display: none; /* Initially hidden */
+    margin-left: 0.5rem;
+}
+
+.book-item.deleting {
+    opacity: 0.6;
+    pointer-events: none; /* Prevent further clicks */
+}

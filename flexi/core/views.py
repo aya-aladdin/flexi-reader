@@ -5,10 +5,15 @@ from django.contrib.auth.decorators import login_required
 from .models import UserProfile, Book, Annotation
 from .forms import UserProfileForm, BookUploadForm, BookForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import JsonResponse, FileResponse
+from django.http import JsonResponse, FileResponse, HttpResponse
 import logging
 import os
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+from django.views.decorators.csrf import csrf_protect
 
 # Configure logging at the module level
 logging.basicConfig(level=logging.ERROR)
@@ -22,19 +27,10 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             try:
-                user = form.save(commit=False)
-                if user:
-                    user.save()
-                    UserProfile.objects.create(user=user)
-                    try:
-                        login(request, user)
-                        return redirect('core:home')
-                    except Exception as e:
-                        logger.error(f"Error during login after signup: {e}, type: {type(e)}", exc_info=True)
-                        return render(request, 'core/signup.html', {'form': form, 'error': 'An error occurred during login.'})
-                else:
-                    logger.error("Failed to create a valid user object during signup.")
-                    return render(request, 'core/signup.html', {'form': form, 'error': 'Failed to create user.'})
+                user = form.save()  # Save directly
+                UserProfile.objects.create(user=user)
+                login(request, user)
+                return redirect('core:home')
             except Exception as e:
                 logger.error(f"Error during signup process: {e}, type: {type(e)}", exc_info=True)
                 return render(request, 'core/signup.html', {'form': form, 'error': 'An error occurred during signup.'})
@@ -82,6 +78,8 @@ def upload_book(request):
             book.user = request.user
             book.save()
             return redirect('core:library')
+        else:
+            return render(request, 'core/upload_book.html', {'form': form})
     else:
         form = BookUploadForm()
     return render(request, 'core/upload_book.html', {'form': form})
@@ -180,8 +178,9 @@ def book_file_url(request, book_id):
     book = get_object_or_404(Book, id=book_id, user=request.user)
     return FileResponse(book.file, as_attachment=False)
 
+@login_required
 def get_edit_form_json(request, book_id):
-    book = get_object_or_404(Book, pk=book_id)
+    book = get_object_or_404(Book, pk=book_id, user=request.user) #added user
     form = BookForm(instance=book)
 
     # Convert the form data to a JSON-serializable format
@@ -211,12 +210,15 @@ def update_book(request, book_id):
     else:
         return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)  # Return errors for display
 
-@require_POST
+@csrf_protect # or @method_decorator(csrf_protect, name='dispatch') for class-based views
+@require_POST #make sure only post is allowed
 @login_required
 def delete_book(request, book_id):
-    """
-    View to delete a book.  Handles AJAX DELETE requests.
-    """
-    book = get_object_or_404(Book, id=book_id, user=request.user)
-    book.delete()
-    return JsonResponse({'status': 'success'})  #  Return a JSON response
+    try:
+        book = get_object_or_404(Book, id=book_id, user=request.user)  # Assuming 'Book' is your model
+        book.delete()
+        return JsonResponse({'status': 'success', 'message': 'Book deleted'}) # Return JSON response
+    except Exception as e:
+        logger.exception(f"Error deleting book {book_id}: {e}") # Log the error
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500) # Return error
+
