@@ -222,3 +222,5 @@ def delete_book(request, book_id):
         logger.exception(f"Error deleting book {book_id}: {e}") # Log the error
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500) # Return error
 
+
+
