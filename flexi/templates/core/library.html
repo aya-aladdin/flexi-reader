@@ -438,7 +438,7 @@
             function deleteBook(bookId, bookItem) {
                 bookItem.classList.add('deleting');
                 fetch(`/delete_book/${bookId}/`, {
-                    method: 'POST',  // Change to POST
+                    method: 'POST',  
                     headers: {
                         'X-CSRFToken': getCookie('csrftoken'),
                         'Content-Type': 'application/json'
@@ -552,7 +552,6 @@
                         console.log('Book updated successfully:', updatedData);
                         alert('Book updated successfully!');
                         closeModal();
-                         // Update the book item in the UI
                         const bookItem = document.querySelector(`[data-book-id="${bookId}"]`);
                         if (bookItem) {
                             const titleElement = bookItem.querySelector('.book-title');

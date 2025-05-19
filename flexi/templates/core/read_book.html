@@ -16,8 +16,8 @@
         position: relative;
         overflow-x: auto;
         margin-left: 4rem;
-        overflow-y: scroll; /* Enable vertical scrolling */
-        height: 80vh; /* Limit height for scrolling */
+        overflow-y: scroll; 
+        height: 80vh; 
     }
 
     .annotation {
@@ -394,9 +394,9 @@
     {% endif %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script>
-        // Make file_type available as a global JavaScript variable
+
         const fileType = "{{ file_type }}";
-        const bookId = "{{ book.id }}"; // Make bookId available to JavaScript
+        const bookId = "{{ book.id }}"; 
     </script>
 {% endblock %}
 {% block content %}
@@ -481,8 +481,8 @@
         let annotationColor = '#FFFF00';
         let textInputValue = '';
         let selectedAnnotationId = null;
-        let canvases = {}; // Store canvases for each page
-        let annotations = []; // Store annotation data
+        let canvases = {}; 
+        let annotations = []; 
     
         const annotationColorInput = document.getElementById('annotation-color');
         const annotateButton = document.getElementById('annotate-button');
@@ -499,18 +499,18 @@
                 const viewport = page.getViewport({ scale: scale });
                 const canvas = document.createElement('canvas');
                 canvas.classList.add('pdf-page-canvas');
-                canvas.dataset.pageNumber = pageNumber; // Store the page number
+                canvas.dataset.pageNumber = pageNumber; 
                 const context = canvas.getContext('2d');
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
                 pdfViewerDiv.appendChild(canvas);
     
-                // Create an annotation canvas for each page
+
                 const annotationCanvas = document.createElement('canvas');
                 annotationCanvas.classList.add('annotation-canvas');
                 annotationCanvas.style.width = `${viewport.width}px`;
                 annotationCanvas.style.height = `${viewport.height}px`;
-                annotationCanvas.dataset.pageNumber = pageNumber; // Store page number
+                annotationCanvas.dataset.pageNumber = pageNumber; 
                 pdfViewerDiv.appendChild(annotationCanvas);
     
                 canvases[pageNumber] = {
@@ -525,40 +525,37 @@
                 renderTask.promise.then(() => {
                     if (pageNumber === 1) {
                         document.getElementById('pdf-loading-spinner').style.display = 'none';
-                         // Load existing annotations after the first page is rendered
+
                         loadAnnotations(bookId);
                     }
                 });
             });
         }
 
-        // Function to load all PDF pages
+    
         function loadAllPages(pdfDoc) {
             document.getElementById('pdf-loading-spinner').style.display = 'flex';
-            pdfViewerDiv.innerHTML = ''; // Clear existing pages
+            pdfViewerDiv.innerHTML = ''; 
 
             for (let pageNumber = 1; pageNumber <= pdfDoc.numPages; pageNumber++) {
                 renderPage(pageNumber, 1.5);
             }
 
-            // Hide loading spinner after all pages are rendered
+
             Promise.all(Array.from({ length: pdfDoc.numPages }, (_, i) => pdfDoc.getPage(i + 1)))
                 .then(() => {
                     document.getElementById('pdf-loading-spinner').style.display = 'none';
                 });
         }
 
-        // Function to load PDF document
         function loadPdf(pdfUrl) {
             pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc_ => {
                 pdfDoc = pdfDoc_;
-                // totalPagesSpan.textContent = pdfDoc.numPages;
 
-                // Load all pages for scrolling
                 loadAllPages(pdfDoc);
                 loadAnnotations(bookId);
 
-                // Remove page navigation elements
+
                 const pageNavigation = document.querySelector('.page-number-input-container');
                 if (pageNavigation) {
                     pageNavigation.style.display = 'none';
@@ -570,24 +567,20 @@
             });
         }
 
-        // Load PDF when the script runs
         document.addEventListener('DOMContentLoaded', function() {
             if (fileType === 'pdf') {
                 loadPdf('{% url "core:book_file_url" book.id %}');
             }
 
-        // Color wheel event listener
         annotationColorInput.addEventListener('change', (event) => {
             annotationColor = event.target.value;
         });
 
-        // Text input event listeners
         textInputSubmit.addEventListener('click', () => {
             textInputValue = textInputField.value;
             textInputMode.style.display = 'none';
         });
 
-        // Function to load annotations
         function loadAnnotations(bookId) {
             fetch(`/books/${bookId}/annotations/`)
                 .then(response => response.json())
@@ -598,7 +591,6 @@
                 .catch(error => console.error("Error loading annotations:", error));
         }
 
-        // Function to draw annotations
         function drawAnnotations() {
             annotations.forEach(annotation => {
                 if (canvases[annotation.page_number]) {

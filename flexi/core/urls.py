@@ -16,4 +16,7 @@ urlpatterns = [
     path('get_edit_form/<int:book_id>/', views.get_edit_form_json, name='get_edit_form'),
     path('delete_book/<int:book_id>/', views.delete_book, name='delete_book'),
     path('update_book/<int:book_id>/', views.update_book, name='update_book'),
+    path('books/', views.book_library, name='book_library'),
+    path('books/<int:book_id>/read/', views.read_book, name='read_book'),
+
 ]
